@@ -5,7 +5,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Bg />
-      <div class="static z-10">
+      <div className="static z-10">
         <Component {...pageProps} /> 
       </div>
       

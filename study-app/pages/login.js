@@ -13,7 +13,7 @@ export default function Login() {
                     <div className="p-2">
                         Password: <input className="border-2 ml-2 rounded-lg" type="password" />
                     </div>
-                    <button onClick={() => {Router.push("/")}} class="bg-gray-400 p-2 rounded-lg mt-4">
+                    <button onClick={() => {Router.push("/")}} className="bg-gray-400 p-2 rounded-lg mt-4">
                         login
                     </button>
                 </div>

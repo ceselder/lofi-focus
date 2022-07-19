@@ -2,7 +2,7 @@ import React from 'react'
 import AudioControl from './AudioControl'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function ({ audioControl, volume, setVolume, enabled, onClick, img }) {
+export default function ControlsElem({ audioControl, volume, setVolume, enabled, onClick, img }) {
   return (
     <>
       <div className='my-4 flex flex-row justify-end'>

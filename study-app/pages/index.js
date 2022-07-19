@@ -42,7 +42,7 @@ export default function App(props) {
     <>
       <div className='relative flex h-screen'>
         <div className="flex text-center text-white">
-          <div class="ml-8 mt-12 text-left">
+          <div className="ml-8 mt-12 text-left">
             <motion.h1
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -52,7 +52,7 @@ export default function App(props) {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: 1, duration: 1 }}
-              class=" text-5xl font-semibold block">what would you like to get done today?
+              className=" text-5xl font-semibold block">what would you like to get done today?
             </motion.h1>
             <motion.div 
               initial={{ opacity: 0 }}
