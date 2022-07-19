@@ -29,12 +29,12 @@ export default function TodoList({ visible }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                 >
-                    <div class="py-4">
+                    <div className="py-4">
                         Todo:
                         {todoList.map(elem =>
                             <TodoElem toggleTodo={toggleTodo} key={elem} task={elem} />)}
                     </div>
-                    <div class="py-4">
+                    <div className="py-4">
                         <div className="inline-block text-2xl">
                             <input ref={inputRef} className="rounded-lg text-gray-800" />
                             <div onClick={() => addTodo()}
