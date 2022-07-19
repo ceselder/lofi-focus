@@ -3,38 +3,11 @@ import dynamic from 'next/dynamic'
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 import ControlsElem from './ControlsElem'
 import ControlsElemAudio from './ControlsElemAudio'
+import ControlsElemYoutube from './ControlsElemYoutube';
+import AudioControl from './AudioControl';
 
-const youtubeID = 'jfKfPfyJRdk';
 
-const defaultControlState = {
-  todo: {
-    enabled: false
-  },
-  rain: {
-    enabled: false, volume: 100,
-    imgSrc: 'https://www.svgrepo.com/show/29571/rain.svg',
-    mediaSrc: '/mp3/rain.mp3'
-  },
-  wind: {
-    enabled: false, volume: 100,
-    imgSrc: 'https://www.svgrepo.com/show/76131/wind.svg',
-    mediaSrc: '/mp3/fire.mp3'
-  },
-  fire: {
-    enabled: false, volume: 100,
-    imgSrc: 'https://www.svgrepo.com/show/263992/fire.svg',
-    mediaSrc: '/mp3/rain.mp3'
-  },
-  music: {
-    enabled: false, volume: 100,
-    imgSrc: 'https://www.svgrepo.com/show/29571/rain.svg',
-    mediaSrc: `https://www.youtube.com/watch?v=${youtubeID}`
-  },
-}
-
-export default function Controls() {
-  const [controlState, setControlState] = useState(defaultControlState);
-
+export default function Controls({controlState, setControlState}) {
   function toggleTodoList()
   {
     setControlState(oldState => {
@@ -44,20 +17,10 @@ export default function Controls() {
     })
   }
 
-  function toggleMusic()
-  {
-    setControlState(oldState => {
-      let newState = {...oldState}
-      newState.music.enabled = !newState.music.enabled
-      console.log(newState.music.enabled)
-      return newState
-    })
-  }
-
   return (
     <>
       <div className='flex-col'>
-        <ControlsElem onClick={toggleTodoList} img='https://www.svgrepo.com/show/11307/task-list.svg' />
+        <ControlsElem enabled={controlState.todo.enabled} onClick={toggleTodoList} img='https://www.svgrepo.com/show/11307/task-list.svg' />
         <ControlsElemAudio 
           name={"rain"} 
           controlState={controlState} 
@@ -73,7 +36,11 @@ export default function Controls() {
           controlState={controlState} 
           setControlState={setControlState} 
         />
-        <ControlsElem enabled={true} onClick={toggleMusic} img='https://www.svgrepo.com/show/129576/music-note.svg' />
+        <ControlsElemYoutube 
+          name={"music"} 
+          controlState={controlState} 
+          setControlState={setControlState} 
+        />
       </div>
     </>
 

@@ -7,6 +7,11 @@
   src:  url('/fonts/print_clearly.ttf') format('truetype');
 }
 
+#vertical-slider
+{
+  -webkit-appearance: slider-vertical;
+}
+
 h1 {
   font-family: 'MyWebFont';
 }

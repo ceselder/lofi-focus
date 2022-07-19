@@ -3,10 +3,40 @@ import Router from 'next/router.js';
 import { motion } from 'framer-motion';
 import TodoList from '../components/TodoList';
 import Controls from '../components/Controls';
-import Player from '../components/Player';
+
+
+const lofiYoutubeID = 'jfKfPfyJRdk';
+
+
+const defaultControlState = {
+  todo: {
+    enabled: false
+  },
+  rain: {
+    enabled: false, volume: 1,
+    imgSrc: 'https://www.svgrepo.com/show/29571/rain.svg',
+    mediaSrc: '/mp3/rain.mp3'
+  },
+  wind: {
+    enabled: false, volume: 1,
+    imgSrc: 'https://www.svgrepo.com/show/76131/wind.svg',
+    mediaSrc: '/mp3/fire.mp3'
+  },
+  fire: {
+    enabled: false, volume: 1,
+    imgSrc: 'https://www.svgrepo.com/show/263992/fire.svg',
+    mediaSrc: '/mp3/rain.mp3'
+  },
+  music: {
+    enabled: false, volume: 1,
+    imgSrc: 'https://www.svgrepo.com/show/133878/music-note.svg',
+    mediaSrc: `https://www.youtube.com/watch?v=${lofiYoutubeID}`
+  },
+}
 
 export default function App(props) {
   const [count, setCount] = useState(0)
+  const [controlState, setControlState] = useState(defaultControlState);
 
   return (
     <>
@@ -29,7 +59,7 @@ export default function App(props) {
               whileInView={{ opacity: 1 }}
               transition={{ delay: 2, duration: 1 }}
               className='flex ml-auto items-center'>
-              <TodoList />
+              <TodoList visible={controlState.todo.enabled} />
             </motion.div>
             
           </div>
@@ -39,7 +69,7 @@ export default function App(props) {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
           className='flex ml-auto items-center'>
-          <Controls />
+          <Controls controlState={controlState} setControlState={setControlState} />
         </motion.div>
       </div>
     </>)
