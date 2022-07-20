@@ -10,6 +10,17 @@ export default function ControlsElemAudio({ name, controlState, setControlState 
         audioRef.current.volume = volume;
     }, [volume])
 
+    useEffect(() => {
+        if (controlState[name].enabled)
+        {
+            audioRef.current.play()
+        }
+        else
+        {
+            audioRef.current.pause()
+        }
+    }, [controlState[name].enabled])
+
     /*useEffect(() => {
         if (controlState[name].enabled) {
             audioRef.current.play()
@@ -63,6 +74,7 @@ export default function ControlsElemAudio({ name, controlState, setControlState 
                 img={controlState[name].imgSrc} />
 
                 <audio
+                    volume="100"
                     src={controlState[name].mediaSrc}
                     ref={audioRef}
             />
