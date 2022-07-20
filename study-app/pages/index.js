@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import TodoList from '/components/TodoList';
 import Controls from '/components/Controls';
@@ -12,29 +12,30 @@ const defaultControlState = {
     enabled: false
   },
   rain: {
-    enabled: false, volume: 1,
-    imgSrc: 'https://www.svgrepo.com/show/29571/rain.svg',
+    enabled: false, volume: 50,
+    imgSrc: '/img/rain.svg',
     mediaSrc: '/mp3/rain.mp3'
-  },
-  wind: {
-    enabled: false, volume: 1,
-    imgSrc: 'https://www.svgrepo.com/show/76131/wind.svg',
-    mediaSrc: '/mp3/fire.mp3'
   },
   fire: {
-    enabled: false, volume: 1,
+    enabled: false, volume: 50,
     imgSrc: 'https://www.svgrepo.com/show/263992/fire.svg',
-    mediaSrc: '/mp3/rain.mp3'
+    mediaSrc: '/mp3/fire.mp3'
+  },
+  nature: {
+    enabled: false, volume: 50,
+    imgSrc: '/img/nature.svg',
+    mediaSrc: '/mp3/nature.mp3'
   },
   music: {
-    enabled: false, volume: 1,
+    enabled: false, volume: 50,
     imgSrc: 'https://www.svgrepo.com/show/133878/music-note.svg',
     mediaSrc: `https://www.youtube.com/watch?v=${lofiYoutubeID}`
   },
 }
 
-export default function App(props) {
-  const [count, setCount] = useState(0)
+export const controlStateContext = createContext();
+
+export default function App() {
   const [controlState, setControlState] = useState(defaultControlState);
 
   return (
@@ -68,7 +69,10 @@ export default function App(props) {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 2, duration: 1 }}
           className='flex ml-auto items-center'>
-          <Controls controlState={controlState} setControlState={setControlState} />
+            <controlStateContext.Provider value={[controlState, setControlState]}>
+              <Controls />
+            </controlStateContext.Provider>
+          
         </motion.div>
       </div>
     </>)

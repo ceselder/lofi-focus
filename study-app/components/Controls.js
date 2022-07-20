@@ -1,9 +1,13 @@
+import { useContext } from 'react';
+import useElemState from '../hooks/useElemState';
 import ControlsElem from '/components/ControlsElem'
 import ControlsElemAudio from '/components/ControlsElemAudio'
-import ControlsElemYoutube from '/components/ControlsElemYoutube';
+import { controlStateContext } from '../pages';
 
 
-export default function Controls({controlState, setControlState}) {
+export default function Controls() {
+  const [controlState, setControlState] = useContext(controlStateContext)
+
   function toggleTodoList()
   {
     setControlState(oldState => {
@@ -18,24 +22,21 @@ export default function Controls({controlState, setControlState}) {
       <div className='flex-col'>
         <ControlsElem enabled={controlState.todo.enabled} onClick={toggleTodoList} img='https://www.svgrepo.com/show/11307/task-list.svg' />
         <ControlsElemAudio 
-          name={"rain"} 
-          controlState={controlState} 
-          setControlState={setControlState} 
+          elemState={controlState.rain} 
+          setElemState={useElemState("rain",setControlState)} 
         />
         <ControlsElemAudio 
-          name={"fire"} 
-          controlState={controlState} 
-          setControlState={setControlState} 
+          elemState={controlState.fire} 
+          setElemState={useElemState("fire",setControlState)} 
         />
         <ControlsElemAudio 
-          name={"wind"} 
-          controlState={controlState} 
-          setControlState={setControlState} 
+          elemState={controlState.nature} 
+          setElemState={useElemState("nature",setControlState)} 
         />
-        <ControlsElemYoutube 
-          name={"music"} 
-          controlState={controlState} 
-          setControlState={setControlState} 
+        <ControlsElemAudio 
+          playerType="youtube"
+          elemState={controlState.music} 
+          setElemState={useElemState("music",setControlState)} 
         />
       </div>
     </>

@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 export default function AudioControl({volume, setVolume}) {
-  const volumeCopy = volume
+  const inputRef = useRef();
+
+  useEffect(() => 
+  {
+    inputRef.current.value = volume
+  }, [volume])
+
   function onChange(ref)
   {
-    const newValue = ref.target.value / 100
-    console.log(newValue)
+    const newValue = ref.target.value
     setVolume(newValue)
   }
 
   return (
     <div>
-        <input volume={volumeCopy} onChange={onChange} id="vertical-slider" type="range" orient="vertical" className='my-0 h-[5.5rem] w-2' />
+        <input step="1" ref={inputRef} onChange={onChange} id="vertical-slider" type="range" orient="vertical" className='-mb-2 h-[6rem]' />
     </div>
   )
 }

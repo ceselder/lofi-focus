@@ -1,63 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
+const ReactPlayer = dynamic(() => import('react-player'), {
+    ssr: false,
+  })
+import dynamic from 'next/dynamic';
 import ControlsElem from '/components/ControlsElem';
+import AudioPlayer from './AudioPlayer';
 
-export default function ControlsElemAudio({ name, controlState, setControlState }) {
-    const [volume, setVolume] = useState(controlState[name].volume)
-    const audioRef = useRef();
-    const fadeDelta = 5;
-
-    useEffect(() => {
-        audioRef.current.volume = volume;
-    }, [volume])
-
-    useEffect(() => {
-        if (controlState[name].enabled)
-        {
-            audioRef.current.play()
-        }
-        else
-        {
-            audioRef.current.pause()
-        }
-    }, [controlState[name].enabled])
-
-    /*useEffect(() => {
-        if (controlState[name].enabled) {
-            audioRef.current.play()
-            const currInterval = setInterval(() =>
-            {
-                if (audioRef.current.volume >= 0.95)
-                {
-                    clearInterval(currInterval)
-                    audioRef.current.volume = 1;
-                    return
-                }
-                audioRef.current.volume += 0.01
-            },fadeDelta)
-        }
-        else {
-            setTimeout(() => {
-                audioRef.current.pause()
-            }, (fadeDelta * 110));
-            const currInterval = setInterval(() =>
-            {
-                if (audioRef.current.volume <= 0.05)
-                {
-                    clearInterval(currInterval)
-                    audioRef.current.volume = 0;
-                    return
-                }
-                audioRef.current.volume -= 0.01
-            },fadeDelta)
-        }
-    }, [controlState]
-    )*/
+export default function ControlsElemAudio({ playerType, elemState, setElemState }) {
+    const [volume, setVolume] = useState(elemState.volume)
 
     function clickHandler() {
-        setControlState(oldState => {
+        setElemState(oldState => {
             const newState = { ...oldState }
-            newState[name].enabled = !newState[name].enabled
-            console.log(newState)
+            newState.enabled = !newState.enabled
             return newState
         }
         )
@@ -69,16 +24,30 @@ export default function ControlsElemAudio({ name, controlState, setControlState 
                 audioControl={true}
                 volume={volume}
                 setVolume={setVolume}
-                enabled={controlState[name].enabled}
+                enabled={elemState.enabled}
                 onClick={clickHandler}
-                img={controlState[name].imgSrc} />
+                img={elemState.imgSrc} />
+            {(playerType == "mp3") &&
+                (<AudioPlayer 
+                    playing={elemState.enabled}
+                    volume={volume}
+                    src={elemState.mediaSrc} />)
+            }
+            {(playerType == "youtube") &&
+                (
+                    <ReactPlayer
+                        height="0"
+                        width="0"
+                        playing={elemState.enabled}
+                        volume={(volume / 100).toFixed(2)}
+                        url={elemState.mediaSrc} 
+                    />)
+            }
 
-                <audio
-                    volume="100"
-                    src={controlState[name].mediaSrc}
-                    ref={audioRef}
-            />
-            
         </>
     )
 }
+
+ControlsElemAudio.defaultProps = {
+    playerType: 'mp3',
+};
