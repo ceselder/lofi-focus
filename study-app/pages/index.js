@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import Router from 'next/router.js';
 import { motion } from 'framer-motion';
-import TodoList from '../components/TodoList';
-import Controls from '../components/Controls';
+import TodoList from '/components/TodoList';
+import Controls from '/components/Controls';
 
 
 const lofiYoutubeID = 'jfKfPfyJRdk';

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react"
-import TodoElem from "./TodoElem";
+import TodoElem from "/components/TodoElem";
 import { v4 as uuidv4 } from 'uuid';
 import { motion, AnimatePresence } from 'framer-motion'
 const initialTodoList = []

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import ControlsElem from './ControlsElem';
-import ReactAudioPlayer from 'react-audio-player'
-import AudioControl from './AudioControl';
+import ControlsElem from '/components/ControlsElem';
 
 export default function ControlsElemAudio({ name, controlState, setControlState }) {
     const [volume, setVolume] = useState(controlState[name].volume)

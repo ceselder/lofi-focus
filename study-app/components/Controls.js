@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
-const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
-import ControlsElem from './ControlsElem'
+import ControlsElem from '/components/ControlsElem'
 import ControlsElemAudio from './ControlsElemAudio'
 import ControlsElemYoutube from './ControlsElemYoutube';
-import AudioControl from './AudioControl';
 
 
 export default function Controls({controlState, setControlState}) {
