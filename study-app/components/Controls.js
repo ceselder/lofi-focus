@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
-import dynamic from 'next/dynamic'
 import ControlsElem from '/components/ControlsElem'
-import ControlsElemAudio from './ControlsElemAudio'
-import ControlsElemYoutube from './ControlsElemYoutube';
+import ControlsElemAudio from '/components/ControlsElemAudio'
+import ControlsElemYoutube from '/components/ControlsElemYoutube';
 
 
 export default function Controls({controlState, setControlState}) {

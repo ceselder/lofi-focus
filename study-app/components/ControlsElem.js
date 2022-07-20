@@ -1,5 +1,5 @@
 import React from 'react'
-import AudioControl from './AudioControl'
+import AudioControl from '/components/AudioControl'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ControlsElem({ audioControl, volume, setVolume, enabled, onClick, img }) {
