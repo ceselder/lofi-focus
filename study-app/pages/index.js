@@ -49,7 +49,7 @@ export async function getStaticProps(context) {
       mediaSrc: '/mp3/brown_noise.mp3'
     },
     music: {
-      enabled: true, volume: 50,
+      enabled: false, volume: 50,
       imgSrc: 'https://www.svgrepo.com/show/133878/music-note.svg',
       stationIndex: 0,
       mediaSrc: '' //handled by useEffect
