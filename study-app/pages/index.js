@@ -5,7 +5,6 @@ import Controls from '/components/Controls';
 import Background from '../components/Background';
 import CurrentlyPlaying from '../components/CurrentlyPlaying';
 import BottomControls from '../components/BottomControls';
-import fs from 'fs'
 
 
 const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
@@ -13,8 +12,11 @@ const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=jfKfPfyJRdk',
   'https://www.youtube.com/watch?v=kgx4WGK0oNU',
   'https://www.youtube.com/watch?v=ceqgwo7U28Y']
+
 export function getServerSideProps(context)
 {
+  const { readdirSync } = require("fs");
+  const path = require("path")
   let userAgent;
   if (context.req) { // if you are on the server and you get a 'req' property from your context
     userAgent = context.req.headers['user-agent'] // get the user-agent from the headers
@@ -24,7 +26,9 @@ export function getServerSideProps(context)
   let isMobile = Boolean(userAgent.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
   ))
-  let backgrounds = fs.readdirSync('public/mp4/backgrounds')
+
+  const backgroundsDirectory = path.resolve(process.cwd(), 'public/mp4/backgrounds');
+  let backgrounds = readdirSync(backgroundsDirectory)
   backgrounds = backgrounds.map(filename => `mp4/backgrounds/${filename}`)
 
   const controlState = {
