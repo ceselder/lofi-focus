@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useContext, useState } from 'react'
-const ReactPlayer = dynamic(() => import('react-player'), {
+const ReactPlayer = dynamic(() => import('react-player/lazy'), {
     ssr: false,
   })
 import dynamic from 'next/dynamic';
