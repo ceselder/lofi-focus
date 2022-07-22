@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { controlStateContext } from "../pages"
 
-export default function Background({ background })
+export default function Background()
 {
     const [controlState, setControlState] = useContext(controlStateContext)
     return (<div>

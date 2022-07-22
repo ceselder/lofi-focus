@@ -121,11 +121,11 @@ export default function App({ backgrounds, defaultControlState }) {
               className='flex ml-auto items-center'>
               <Controls />
             </motion.div>
-            <div class="absolute bottom-0 left-0 ml-2 mb-2">
+            <div className="absolute bottom-0 left-0 ml-2 mb-2">
               <CurrentlyPlaying />
             </div>
 
-            <div class="absolute bottom-0 right-0 mr-2 mb-2">
+            <div className="absolute bottom-0 right-0 mr-2 mb-2">
               <BottomControls />
             </div>
           </div>
