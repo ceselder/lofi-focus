@@ -13,13 +13,22 @@ const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=jfKfPfyJRdk',
   'https://www.youtube.com/watch?v=kgx4WGK0oNU',
   'https://www.youtube.com/watch?v=ceqgwo7U28Y']
-
-export async function getStaticProps(context) {
+export function getServerSideProps(context)
+{
+  let userAgent;
+  if (context.req) { // if you are on the server and you get a 'req' property from your context
+    userAgent = context.req.headers['user-agent'] // get the user-agent from the headers
+  } else {
+    userAgent = navigator.userAgent // if you are on the client you can access the navigator from the window object
+  }
+  let isMobile = Boolean(userAgent.match(
+    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+  ))
   let backgrounds = fs.readdirSync('./public/mp4/backgrounds')
   backgrounds = backgrounds.map(filename => `mp4/backgrounds/${filename}`)
-    
 
   const controlState = {
+    isMobile: isMobile,
     stations: stations,
     paused: false,
     backgrounds: backgrounds,
@@ -58,21 +67,20 @@ export async function getStaticProps(context) {
   }
 
   return {
-    props: { backgrounds: backgrounds, defaultControlState: controlState },
+    props: { defaultControlState: controlState },
   }
 }
 
 export const controlStateContext = createContext();
 
-export default function App({ backgrounds, defaultControlState }) {
+export default function App({ defaultControlState }) {
   const [controlState, setControlState] = useState(defaultControlState);
-
 
   useEffect(() => {
     //todo niet beste manier om dit te doen
     setControlState(oldState => {
       const newState = { ...oldState }
-      newState.background = backgrounds[controlState.backgroundIndex]
+      newState.background = controlState.backgrounds[controlState.backgroundIndex]
       return newState
     })
   }, [controlState.backgroundIndex])
