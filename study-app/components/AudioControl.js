@@ -22,7 +22,7 @@ export default function AudioControl({volume, setVolume}) {
                id="vertical-slider" 
                type="range" 
                orient="vertical" 
-               className='absolute translate-y-0.5 -translate-x-3 lg:-translate-x-5 mr-2 max-w-[1rem] h-16 lg:h-24' 
+               className='absolute translate-y-0.5 -translate-x-3 md:-translate-x-5 mr-2 max-w-[1rem] h-16 md:h-24' 
         />
     </div>
   )

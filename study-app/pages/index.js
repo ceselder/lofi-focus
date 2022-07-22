@@ -118,12 +118,12 @@ export default function App({ pageURL, defaultControlState }) {
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ default: {ease: "easeInOut", duration: 0.4 }}}
-                  className="pt-12 text-3xl lg:text-5xl font-semibold block">Welcome back, </motion.h1>
+                  className="pt-12 text-3xl md:text-5xl font-semibold block">Welcome back, </motion.h1>
                 <motion.h1
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ ease: "easeInOut", duration: 0.4, delay: 0.8 }}
-                  className="text-3xl lg:text-5xl font-semibold block">what would you like to get done today?
+                  className="text-3xl md:text-5xl font-semibold block">what would you like to get done today?
                 </motion.h1>
                 <motion.div
                   initial={{ opacity: 0 }}
