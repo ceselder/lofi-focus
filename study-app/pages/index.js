@@ -24,7 +24,7 @@ export function getServerSideProps(context)
   let isMobile = Boolean(userAgent.match(
     /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
   ))
-  let backgrounds = fs.readdirSync('./public/mp4/backgrounds')
+  let backgrounds = fs.readdirSync('public/mp4/backgrounds')
   backgrounds = backgrounds.map(filename => `mp4/backgrounds/${filename}`)
 
   const controlState = {
