@@ -30,8 +30,8 @@ export default function CurrentlyPlaying() {
         {(controlState.music.enabled) &&
             <motion.div
                     key={controlState.music.enabled}
-                    exit={{ opacity: 0, y: 50}}
-                    initial={{ opacity: 0, y: 50 }}
+                    exit={{ opacity: 0, y: 5}}
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y:0 }}
                     className='print-clearly truncate max-w-2xl font-semibold text-white text-2xl'
             >

@@ -22,8 +22,8 @@ export async function getStaticProps(context) {
     stations: stations,
     paused: false,
     backgrounds: backgrounds,
-    backgroundIndex: 1,
-    background: backgrounds[1], //handled by useEffect
+    backgroundIndex: 4,
+    background: backgrounds[4], //handled by useEffect
     transitionPlaying: false,
     todo: {
       enabled: false
@@ -51,7 +51,7 @@ export async function getStaticProps(context) {
     music: {
       enabled: false, volume: 50,
       imgSrc: 'https://www.svgrepo.com/show/133878/music-note.svg',
-      stationIndex: 0,
+      stationIndex: 2,
       mediaSrc: '' //handled by useEffect
     },
   }
