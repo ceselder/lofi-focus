@@ -22,9 +22,9 @@ export default function ControlsElem({ audioControl, volume, setVolume, enabled,
             )}
           </AnimatePresence>
           <div onClick={onClick}
-            className={`${enabled ? 'opacity-100' : 'opacity-60 hover:opacity-80'} flex justify-center items-center h-24 w-24 p-4 text-3xl 
-     rounded-lg hover:cursor-pointer 
-    bg-gray-200 ml-2 mr-4`}>
+            className={`${enabled ? 'opacity-100' : 'opacity-60 hover:opacity-80'} flex 
+            justify-center items-center h-16 w-16 p-2 xl:h-24 xl:w-24 xl:p-4 text-3xl 
+            rounded-lg hover:cursor-pointer bg-gray-200 ml-2 mr-4`}>
 
             <img src={img} className='opacity-100 w-full' />
           </div>

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useContext, useState } from 'react'
 import Background from '../components/Background'
 import '../styles/globals.css'
@@ -5,7 +6,10 @@ import '../styles/globals.css'
 function MyApp({ Component, pageProps }) {
   return (
     <>
-            <Component {...pageProps} /> 
+    <Head>
+    <link rel="manifest" href="/manifest.json"></link>
+    </Head>
+        <Component {...pageProps} /> 
     </>
   )
 }

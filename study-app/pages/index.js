@@ -7,6 +7,7 @@ import CurrentlyPlaying from '../components/CurrentlyPlaying';
 import BottomControls from '../components/BottomControls';
 import fs from 'fs'
 
+
 const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=-9gEgshJUuY',
   'https://www.youtube.com/watch?v=jfKfPfyJRdk',
@@ -97,12 +98,12 @@ export default function App({ backgrounds, defaultControlState }) {
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ default: {ease: "easeInOut", duration: 0.4 }}}
-                  className="pt-12 text-5xl font-semibold block">Welcome back, </motion.h1>
+                  className="pt-12 text-3xl lg:text-5xl font-semibold block">Welcome back, </motion.h1>
                 <motion.h1
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ ease: "easeInOut", duration: 0.4, delay: 0.8 }}
-                  className=" text-5xl font-semibold block">what would you like to get done today?
+                  className="text-3xl lg:text-5xl font-semibold block">what would you like to get done today?
                 </motion.h1>
                 <motion.div
                   initial={{ opacity: 0 }}
