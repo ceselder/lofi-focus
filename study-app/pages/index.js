@@ -5,6 +5,8 @@ import Controls from '/components/Controls';
 import Background from '../components/Background';
 import CurrentlyPlaying from '../components/CurrentlyPlaying';
 import BottomControls from '../components/BottomControls';
+import { readdirSync } from "fs";
+const path = require("path")
 
 
 const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
@@ -13,26 +15,17 @@ const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=kgx4WGK0oNU',
   'https://www.youtube.com/watch?v=ceqgwo7U28Y']
 
-export function getServerSideProps(context)
+
+export function getStaticProps(context)
 {
-  const { readdirSync } = require("fs");
-  const path = require("path")
-  let userAgent;
-  if (context.req) { // if you are on the server and you get a 'req' property from your context
-    userAgent = context.req.headers['user-agent'] // get the user-agent from the headers
-  } else {
-    userAgent = navigator.userAgent // if you are on the client you can access the navigator from the window object
-  }
-  let isMobile = Boolean(userAgent.match(
-    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
-  ))
 
   const backgroundsDirectory = path.resolve(process.cwd(), 'public/mp4/backgrounds');
   let backgrounds = readdirSync(backgroundsDirectory)
   backgrounds = backgrounds.map(filename => `mp4/backgrounds/${filename}`)
 
+
   const controlState = {
-    isMobile: isMobile,
+    isMobile: false,
     stations: stations,
     paused: false,
     backgrounds: backgrounds,
@@ -71,14 +64,29 @@ export function getServerSideProps(context)
   }
 
   return {
-    props: { defaultControlState: controlState },
+    props: { pageURL: process.env.URL, defaultControlState: controlState },
   }
 }
 
+
+
 export const controlStateContext = createContext();
 
-export default function App({ defaultControlState }) {
+export default function App({ pageURL, defaultControlState }) {
   const [controlState, setControlState] = useState(defaultControlState);
+
+  useEffect(async () => {
+    //we have to do this here because we want to keep static props
+    //otherwise we end up with a 120mb serverless function
+    const isMobile = await fetch(`${pageURL}/api/ismobile`)
+                                .then(resp => resp.json())
+                                .then(resp => { console.log(resp); return resp.isMobile})
+    setControlState(oldState => {
+      const newState = { ...oldState }
+      newState.isMobile = isMobile
+      return newState
+    })
+    }, [])
 
   useEffect(() => {
     //todo niet beste manier om dit te doen
