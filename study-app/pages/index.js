@@ -5,6 +5,7 @@ import Controls from '/components/Controls';
 import Background from '../components/Background';
 import CurrentlyPlaying from '../components/CurrentlyPlaying';
 import BottomControls from '../components/BottomControls';
+import fs from 'fs'
 
 const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=-9gEgshJUuY',
@@ -13,10 +14,9 @@ const stations = ['https://www.youtube.com/watch?v=-5KAN9_CzSA',
   'https://www.youtube.com/watch?v=ceqgwo7U28Y']
 
 export async function getStaticProps(context) {
-  const backgrounds = await fetch(`${process.env.URL}/api/backgrounds`)
-    .then(resp => resp.json())
-    .then(resp => resp.backgrounds)
-  console.log(backgrounds)
+  let backgrounds = fs.readdirSync('./public/mp4/backgrounds')
+  backgrounds = backgrounds.map(filename => `mp4/backgrounds/${filename}`)
+    
 
   const controlState = {
     stations: stations,
