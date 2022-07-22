@@ -20,7 +20,9 @@ export default function Controls() {
   return (
     <>
       <div className='flex flex-col'>
-        <ControlsElem enabled={controlState.todo.enabled} onClick={toggleTodoList} img='https://www.svgrepo.com/show/11307/task-list.svg' />
+        <ControlsElem 
+        enabled={controlState.todo.enabled} 
+        onClick={toggleTodoList} img='/img/task-list.svg' />
         <ControlsElemAudio 
           elemState={controlState.rain} 
           setElemState={useElemState("rain",setControlState)} 

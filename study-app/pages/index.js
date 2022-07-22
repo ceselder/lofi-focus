@@ -42,7 +42,7 @@ export function getStaticProps(context)
     },
     fire: {
       enabled: false, volume: 50,
-      imgSrc: 'https://www.svgrepo.com/show/263992/fire.svg',
+      imgSrc: '/img/fire.svg',
       mediaSrc: '/mp3/fire.mp3'
     },
     nature: {
@@ -52,12 +52,12 @@ export function getStaticProps(context)
     },
     whitenoise: {
       enabled: false, volume: 50,
-      imgSrc: 'https://www.svgrepo.com/show/348483/sounds.svg',
+      imgSrc: '/img/sounds.svg',
       mediaSrc: '/mp3/brown_noise.mp3'
     },
     music: {
       enabled: false, volume: 50,
-      imgSrc: 'https://www.svgrepo.com/show/133878/music-note.svg',
+      imgSrc: '/img/music-note.svg',
       stationIndex: 2,
       mediaSrc: '' //handled by useEffect
     },

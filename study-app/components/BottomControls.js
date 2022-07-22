@@ -55,7 +55,7 @@ export default function BottomControls() {
                 <BottomControlsElem
                     enabled={false}
                     onClick={nextBackground}
-                    img={'https://www.svgrepo.com/show/371946/image-gallery.svg'}
+                    img={'/img/image-gallery.svg'}
                 />
                 <BottomControlsElem
                     enabled={false}
@@ -65,7 +65,7 @@ export default function BottomControls() {
                 <BottomControlsElem
                     enabled={controlState.paused}
                     onClick={pause}
-                    img={'https://www.svgrepo.com/show/74606/pause.svg'}
+                    img={'/img/pause.svg'}
                 />
             </div>
             <ReactPlayer
