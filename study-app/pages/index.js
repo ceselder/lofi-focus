@@ -25,7 +25,6 @@ export function getStaticProps(context)
 
 
   const controlState = {
-    isMobile: false,
     stations: stations,
     paused: false,
     backgrounds: backgrounds,
@@ -64,7 +63,7 @@ export function getStaticProps(context)
   }
 
   return {
-    props: { pageURL: process.env.URL, defaultControlState: controlState },
+    props: { defaultControlState: controlState },
   }
 }
 
@@ -72,21 +71,9 @@ export function getStaticProps(context)
 
 export const controlStateContext = createContext();
 
-export default function App({ pageURL, defaultControlState }) {
+export default function App({ defaultControlState }) {
   const [controlState, setControlState] = useState(defaultControlState);
 
-  useEffect(async () => {
-    //we have to do this here because we want to keep static props
-    //otherwise we end up with a 120mb serverless function
-    const isMobile = await fetch(`${pageURL}/api/ismobile`)
-                                .then(resp => resp.json())
-                                .then(resp => { console.log(resp); return resp.isMobile})
-    setControlState(oldState => {
-      const newState = { ...oldState }
-      newState.isMobile = isMobile
-      return newState
-    })
-    }, [])
 
   useEffect(() => {
     //todo niet beste manier om dit te doen
