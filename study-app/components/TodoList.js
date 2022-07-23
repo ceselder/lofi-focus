@@ -47,7 +47,7 @@ export default function TodoList({ visible }) {
                     animate={{ opacity: 1 }}
                     className="text-2xl font-bold"
                 >
-                    <div class="text-2xl">
+                    <div className="text-2xl">
                         <p className="text-4xl font-extrabold underline">
                             Todo
                         </p>
