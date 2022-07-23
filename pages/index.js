@@ -120,7 +120,7 @@ export default function App({ defaultControlState }) {
                 </motion.h1>
 
               </div>
-              <div class='absolute right-0 left-0 top-0 bottom-0 m-auto w-min h-min text-center gap-14 flex flex-col md:flex-row'>
+              <div className='absolute right-0 left-0 top-0 bottom-0 m-auto w-min h-min text-center gap-14 flex flex-col md:flex-row'>
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
