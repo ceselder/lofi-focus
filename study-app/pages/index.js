@@ -110,10 +110,9 @@ export default function App({ pageURL, defaultControlState }) {
     <>
       <controlStateContext.Provider value={[controlState, setControlState]}>
         <Background background={controlState.background} />
-        <div className="static z-10">
+        <div className="print-clearly text-white static z-10">
           <div className='relative flex h-screen'>
-            <div className="flex text-center text-white">
-              <div className="ml-8 mt-2 text-left">
+              <div className="block h-min ml-8 mt-2 text-left ">
                 <motion.h1
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -125,16 +124,15 @@ export default function App({ pageURL, defaultControlState }) {
                   transition={{ ease: "easeInOut", duration: 0.4, delay: 0.8 }}
                   className="text-3xl md:text-5xl font-semibold block">what would you like to get done today?
                 </motion.h1>
-                <motion.div
+
+              </div>
+            <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ default: {ease: "easeInOut"}, delay: 2, duration: 1 }}
-                  className='flex ml-auto items-center'>
+                  className='absolute right-0 left-0 top-0 bottom-0 m-auto w-min h-min text-center'>
                   <TodoList visible={controlState.todo.enabled} />
-                </motion.div>
-
-              </div>
-            </div>
+            </motion.div>
             <motion.div
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}

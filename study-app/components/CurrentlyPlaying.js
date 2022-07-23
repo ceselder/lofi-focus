@@ -35,7 +35,14 @@ export default function CurrentlyPlaying() {
                     animate={{ opacity: 1, y:0 }}
                     className='print-clearly truncate max-w-[14rem] text-sm md:text-2xl md:max-w-2xl font-semibold text-white'
             >
-                Listening to: <span onClick={() => (window.open(controlState.music.mediaSrc))} className="hover:underline hover:cursor-pointer font-bold">{musicTitle}</span>
+                Listening to: 
+                <span
+                    onClick={() => (window.open(controlState.music.mediaSrc))} 
+                    className="hover:underline hover:cursor-pointer font-bold"
+                >
+                {musicTitle}
+                </span>
+                
             </motion.div>
         }
         </AnimatePresence>

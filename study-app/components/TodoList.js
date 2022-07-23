@@ -11,40 +11,63 @@ export default function TodoList({ visible }) {
     const inputRef = useRef();
 
     function addTodo() {
-        setTodoList(old => [...old, { id: uuidv4(), value: inputRef.current.value, completed: false }])
+        const taskValue = inputRef.current.value
+        setTodoList(old =>
+            [...old, 
+                {
+                    id: uuidv4(),
+                    value: taskValue,
+                    completed: false
+                }
+            ]
+        )
+        inputRef.current.value = ""
+    }
+
+    function clearList()
+    {
+        setTodoList([])
     }
 
     function toggleTodo(id) {
-        const todoListCopy = [...todoList]
-        const currTodo = todoListCopy.find(elem => elem.id === id)
-        currTodo.completed = !currTodo.completed
-        setTodoList(todoListCopy)
+        setTodoList(oldTodo => {
+            const todoListCopy = [...oldTodo]
+            const currTodo = todoListCopy.find(elem => elem.id === id)
+            currTodo.completed = !currTodo.completed
+            return todoListCopy
+        })
     }
 
     return (
         <AnimatePresence>
             {visible && (
                 <motion.div
-                    exit={{ opacity: 0}}
+                    exit={{ opacity: 0 }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
+                    className="text-2xl font-bold"
                 >
-                    <div className="py-4">
-                        Todo:
+                    <div class="text-2xl">
+                        <p className="text-4xl font-extrabold underline">
+                            Todo
+                        </p>
+                        <div>
                         {todoList.map(elem =>
-                            <TodoElem toggleTodo={toggleTodo} key={elem} task={elem} />)}
+                                <TodoElem toggleTodo={toggleTodo}
+                                    key={elem.id}
+                                    task={elem} />)}
+                        </div>
                     </div>
                     <div className="py-4">
-                        <div className="inline-block text-2xl">
-                            <input ref={inputRef} className="rounded-lg text-gray-800" />
-                            <div onClick={() => addTodo()}
-                                className="hover:bg-white hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
-                                ✓
-                            </div>
-                            <div className="hover:bg-white hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
-                                ✖
+                            <div className="inline-block text-2xl">
+                                <input onKeyDown={(event) => (event.key === 'Enter') ? addTodo() : ('')}
+                                    ref={inputRef}
+                                    className="p-1 text-base rounded-lg text-white bg-transparent border-white border-2"
+                                />
                             </div>
                         </div>
+                    <div onClick={clearList} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
+                        Clear List
                     </div>
                 </motion.div>
             )}
