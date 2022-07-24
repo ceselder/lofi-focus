@@ -1,6 +1,29 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { controlStateContext } from '../pages'
+import { useFirstRender } from '../hooks/useFirstRender'
+
+function getTimeStr(time) {
+    const hourOffset = 60 * 60 //compiler probably optimizes this but whatever
+    const minuteOffset = 60
+
+    let currentTime = time
+    let hours = 0
+    let minutes = 0
+    let seconds = 0
+
+    while (currentTime >= hourOffset) {
+        currentTime -= hourOffset;
+        hours++
+    }
+    while (currentTime >= minuteOffset) {
+        currentTime -= minuteOffset;
+        minutes++
+    }
+    seconds = currentTime
+
+    return (`${(hours == 0) ? '' : `${(hours > 9) ? hours : `0${hours}`}:`}${(minutes > 9) ? minutes : `0${minutes}`}:${(seconds > 9) ? seconds : `0${seconds}`}`)
+}
 
 export default function Pomodoro() {
     const [controlState, setControlState] = useContext(controlStateContext);
@@ -8,67 +31,59 @@ export default function Pomodoro() {
     const [timeStr, setTimeStr] = useState(getTimeStr(controlState.timer.focusTime));
     const [timerPaused, setTimerPaused] = useState(true)
     const [isBreakTime, setIsBreakTime] = useState(false)
+    const firstRender = useFirstRender();
 
-    const [intervalFunction, setIntervalFunction] = useState(() => null );
+    const [focusAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_break.mp3'));
+    const [breakAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_work.mp3'));
+    
 
-    function getTimeStr(time)
-    {
-        const hourOffset = 60 * 60 //compiler probably optimizes this but whatever
-        const minuteOffset = 60
-
-        let currentTime = time
-        let hours = 0
-        let minutes = 0
-        let seconds = 0
-
-        while(currentTime >= hourOffset)
+    useEffect(() => {
+        if (!firstRender)
         {
-            currentTime -= hourOffset;
-            hours++
-        }
-        while(currentTime >= minuteOffset)
-        {
-            currentTime -= minuteOffset;
-            minutes++
-        }
-        seconds = currentTime
-
-        console.log(hours, minutes, seconds)
-
-        return (`${(hours == 0) ? '' : `${hours}:`}${minutes}:${seconds}`)
-    }
-
-
-    function countDownFunction() {
-            if (!timerPaused)
+            if (isBreakTime)
             {
-                setTime(oldTime => {
-                    const newTime = oldTime - 1;
-                    setTimeStr(getTimeStr(newTime))
-                    return newTime
-                })
+                setTime(controlState.timer.breakTime)
+                focusAlert.play()
             }
-    }
+            else
+            {
+                setTime(controlState.timer.focusTime)
+                breakAlert.play()
+            }
+        }
+    }, [isBreakTime])
 
-    function startTimer() {
-        setIntervalFunction(countDownFunction)
-        setTimerPaused(false)
-    }
+    useEffect(() =>
+        setTimeStr(getTimeStr(time))
+    , [time])
 
-    function pauseTimer() {
-        setIntervalFunction(old => { clearInterval(old); return (() => (null)) })
-        setTimerPaused(true)
-    }
+    useEffect(() => {
+        setTimerPaused(controlState.timer.enabled)
+    }, [controlState.timer.enabled])
+
+    useEffect(() => {
+        if (!timerPaused)
+        {
+            const interval = setInterval(() => {
+                if (!timerPaused) {
+                    setTime(oldTime => {
+                        const newTime = oldTime - 1;
+                        if (newTime <= 0)
+                        {
+                            setIsBreakTime(isBreak => !isBreak)                
+                            setTimerPaused(true)
+                            return newTime
+                        }
+                        return newTime
+                    })
+                }
+            }, 1000)
+            return () => clearInterval(interval);
+        }
+    }, [timerPaused])
 
     function toggleTimer() {
-        if (timerPaused)
-        {
-            startTimer()
-        }
-        else
-        {
-            pauseTimer()
-        }
+        setTimerPaused(isPaused => !isPaused)
     }
 
     return (
@@ -85,12 +100,12 @@ export default function Pomodoro() {
                             <p className="text-4xl font-extrabold underline">
                                 Pomodoro
                             </p>
-                            <div>
+                            <div className={`${isBreakTime ? 'text-green-500' : 'text-red-500'}`}>
                                 {timeStr}
                             </div>
                         </div>
                         <div onClick={toggleTimer} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
-                            {timerPaused ? 'Start' : 'Pause'} Timer
+                            {`${timerPaused ? 'Start' : 'Pause'} Timer`}
                         </div>
                     </motion.div>
                 )}

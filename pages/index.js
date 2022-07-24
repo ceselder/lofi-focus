@@ -8,6 +8,7 @@ import BottomControls from '../components/BottomControls';
 import Pomodoro from '../components/Pomodoro';
 import { readdirSync } from "fs";
 import useElemState from '../hooks/useElemState';
+import Links from '../components/Links';
 const path = require("path")
 
 
@@ -38,7 +39,7 @@ export function getStaticProps(context)
     },
     timer: {
       focusTime: 25 * 60,
-      breakTime: 5  * 60,
+      breakTime: 5 * 60,
       enabled: false
     },
     rain: {
@@ -106,39 +107,25 @@ export default function App({ defaultControlState }) {
         <Background background={controlState.background} />
         <div className="print-clearly text-white static z-10">
           <div className='relative flex h-screen'>
-              <div className="block h-min ml-8 mt-2 text-left ">
-                <motion.h1
-                  initial={{ opacity: 0, y: -10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ default: {ease: "easeInOut", duration: 0.4 }}}
-                  className="pt-12 text-3xl md:text-5xl font-semibold block">Welcome back, </motion.h1>
-                <motion.h1
-                  initial={{ opacity: 0, y: -10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ ease: "easeInOut", duration: 0.4, delay: 0.8 }}
-                  className="text-3xl md:text-5xl font-semibold block">what would you like to get done today?
-                </motion.h1>
-
-              </div>
               <div className='absolute right-0 left-0 top-0 bottom-0 m-auto w-min h-min text-center gap-14 flex flex-col md:flex-row'>
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ default: {ease: "easeInOut"}, delay: 2, duration: 1 }}>
+                  transition={{ default: {ease: "easeInOut"}, duration: 0.4 }}>
                   <TodoList visible={controlState.todo.enabled} />
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
-                  transition={{ default: {ease: "easeInOut"}, delay: 2, duration: 1 }}>
+                  transition={{ default: {ease: "easeInOut"}, duration: 0.4 }}>
                   <Pomodoro />
                 </motion.div>
               </div>
 
             <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 2, duration: 1 }}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
               className='flex ml-auto items-center'>
               <Controls />
             </motion.div>
@@ -146,9 +133,23 @@ export default function App({ defaultControlState }) {
               <CurrentlyPlaying />
             </div>
 
-            <div className="absolute bottom-0 right-0 mr-2 mb-2">
+            
+
+            <motion.div
+              initial={{ opacity: 0 , y: -50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="absolute top-0 left-0 ml-2 mt-2">
+              <Links />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="absolute bottom-0 right-0 mr-2 mb-2">
               <BottomControls />
-            </div>
+            </motion.div>
           </div>
         </div>
       </controlStateContext.Provider>

@@ -33,7 +33,7 @@ export default function CurrentlyPlaying() {
                     exit={{ opacity: 0, y: 5}}
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y:0 }}
-                    className='print-clearly truncate max-w-[14rem] text-sm sm:max-w-sm sm:text-lg md:text-2xl md:max-w-2xl 
+                    className='print-clearly truncate max-w-[16rem] text-base sm:max-w-md sm:text-lg md:text-2xl md:max-w-2xl 
                                lg:text-3xl lg:max-w-3xl font-semibold text-white'
             >
                 Listening to: 
