@@ -20,12 +20,12 @@ export function useMouseHold(func, holdTime = 500, fireInterval = 100) {
                 })
                 return clearTimeout(timeout)
             }, holdTime)
-            useEffect(() => { //double register fix
+            /*useEffect(() => { //double register fix
                 if (holdCancelled)
                 {
                     clearTimeout(timeout)
                 }
-            }, [holdCancelled])
+            }, [holdCancelled])*/
         }
         else {
             setMouseHeld(false)
