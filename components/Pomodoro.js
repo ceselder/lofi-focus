@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { controlStateContext } from '../pages'
 import { useFirstRender } from '../hooks/useFirstRender'
+import PomodoroSettings from './PomodoroSettings'
 
-function getTimeStr(time) {
+export function getTimeStr(time) {
     const hourOffset = 60 * 60 //compiler probably optimizes this but whatever
     const minuteOffset = 60
 
@@ -31,22 +32,26 @@ export default function Pomodoro() {
     const [timeStr, setTimeStr] = useState(getTimeStr(controlState.timer.focusTime));
     const [timerPaused, setTimerPaused] = useState(true)
     const [isBreakTime, setIsBreakTime] = useState(false)
+    const [isSettingsOpen, setSettingsOpen] = useState(false)
     const firstRender = useFirstRender();
 
     const [focusAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_break.mp3'));
     const [breakAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_work.mp3'));
+
+    const settingsVariants = {
+        open: { x: 30, y: 10, rotate: 0 },
+        closed: { x: 30, y: 10, rotate: 90 },
+    }
+
     
 
     useEffect(() => {
-        if (!firstRender)
-        {
-            if (isBreakTime)
-            {
+        if (!firstRender) {
+            if (isBreakTime) {
                 setTime(controlState.timer.breakTime)
                 focusAlert.play()
             }
-            else
-            {
+            else {
                 setTime(controlState.timer.focusTime)
                 breakAlert.play()
             }
@@ -55,22 +60,20 @@ export default function Pomodoro() {
 
     useEffect(() =>
         setTimeStr(getTimeStr(time))
-    , [time])
+        , [time])
 
     useEffect(() => {
         setTimerPaused(controlState.timer.enabled)
     }, [controlState.timer.enabled])
 
     useEffect(() => {
-        if (!timerPaused)
-        {
+        if (!timerPaused) {
             const interval = setInterval(() => {
                 if (!timerPaused) {
                     setTime(oldTime => {
                         const newTime = oldTime - 1;
-                        if (newTime <= 0)
-                        {
-                            setIsBreakTime(isBreak => !isBreak)                
+                        if (newTime <= 0) {
+                            setIsBreakTime(isBreak => !isBreak)
                             setTimerPaused(true)
                             return newTime
                         }
@@ -89,26 +92,47 @@ export default function Pomodoro() {
     return (
         <>
             <AnimatePresence>
-                {controlState.timer.enabled && (
-                    <motion.div
-                        exit={{ opacity: 0 }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-2xl font-bold"
-                    >
-                        <div className="text-2xl">
-                            <p className="text-4xl font-extrabold underline">
-                                Pomodoro
-                            </p>
-                            <div className={`${isBreakTime ? 'text-green-500' : 'text-red-500'}`}>
-                                {timeStr}
+                <div className='flex flex-col'>
+                    {controlState.timer.enabled && (
+                        <motion.div
+                            exit={{ opacity: 0 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="text-2xl font-bold"
+                        >
+                            <div className="text-2xl">
+                                <p className="text-4xl font-extrabold underline">
+                                    Pomodoro
+                                </p>
+                                <motion.div
+                                    animate={isSettingsOpen ? "open" : "closed"}
+                                    variants={settingsVariants}
+                                    initial={{ x: 30, y: 10, rotate: 0 }}
+                                    onClick={() => setSettingsOpen(isOpen => !isOpen)}
+                                    className='hover:cursor-pointer absolute right-0 top-0 fill-white w-6 translate-y-2.5 translate-x-7'>
+                                    <img src='img/settings.svg' />
+                                </motion.div>
+
+                                <div className={`${isBreakTime ? 'text-green-500' : 'text-red-500'}`}>
+                                    {timeStr}
+                                </div>
                             </div>
-                        </div>
-                        <div onClick={toggleTimer} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
-                            {`${timerPaused ? 'Start' : 'Pause'} Timer`}
-                        </div>
-                    </motion.div>
-                )}
+                            <div onClick={toggleTimer} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer inline-block border-white border-2 rounded-lg">
+                                {`${timerPaused ? 'Start' : 'Pause'} Timer`}
+                            </div>
+
+                        {isSettingsOpen && (
+                            <motion.div
+                                exit={{ opacity: 0 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="pt-2 text-2xl font-bold"
+                            >
+                                <PomodoroSettings />
+                            </motion.div>
+                        )}
+                    </motion.div>)}
+                </div>
             </AnimatePresence>
         </>
     )

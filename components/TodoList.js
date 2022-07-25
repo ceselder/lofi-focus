@@ -66,7 +66,7 @@ export default function TodoList({ visible }) {
                                 />
                             </div>
                         </div>
-                    <div onClick={clearList} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer mx-1 inline-block border-white border-2 px-1 rounded-lg">
+                    <div onClick={clearList} className="hover:bg-white p-2 hover:text-black hover:cursor-pointer inline-block border-white border-2 rounded-lg">
                         Clear List
                     </div>
                 </motion.div>
