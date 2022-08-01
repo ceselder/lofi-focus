@@ -1,6 +1,6 @@
 # lofi-focus
 
-lofi-focus is a comfy place to get all your work done
+lofi-focus is a comfy place to block out distractions and get your work done
 
 [Go to site](https://lofi-focus.vercel.app/)
 
