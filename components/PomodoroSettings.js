@@ -18,7 +18,7 @@ export default function PomodoroSettings() {
         setControlState(oldState => {
             const newState = { ...oldState }
             const change = (add ? delta : (-1 * delta))
-            if (newState.timer[timeType] + change > delta) {
+            if (newState.timer[timeType] + change >= delta) {
                 newState.timer[timeType] += change
             }
             return newState
@@ -30,6 +30,15 @@ export default function PomodoroSettings() {
     const [focusTimeDecreaseDown, focusTimeDecreaseUp] = useMouseHold(() => changeTime(false, "focusTime"))
     const [breakTimeIncreaseDown, breakTimeIncreaseUp] = useMouseHold(() => changeTime(true, "breakTime"))
     const [breakTimeDecreaseDown, breakTimeDecreaseUp] = useMouseHold(() => changeTime(false, "breakTime"))
+
+    function toggleSound()
+    {
+        setControlState(oldState => {
+            const newState = {...oldState};
+            newState.timer.playSound = !newState.timer.playSound;
+            return newState
+        })
+    }
 
     useEffect(() => {
         setBreakTimeStr(getTimeStr(controlState.timer.breakTime))
@@ -76,9 +85,11 @@ export default function PomodoroSettings() {
             <p>Play Sound? </p>
             <div className='justify-center flex flex-row gap-2'>
                 <FontAwesomeIcon
+                    onClick={toggleSound}
                     className={`${controlState.timer.playSound ? 'bg-white text-black' : ''} w-4 h-4 p-1 hover:cursor-pointer hover:bg-white hover:text-black border-2 border-white rounded-lg`}
                     icon={faCheck} />
                 <FontAwesomeIcon
+                    onClick={toggleSound}
                     className={`${controlState.timer.playSound ? '' : 'bg-white text-black'} w-4 h-4 p-1 hover:cursor-pointer hover:bg-white hover:text-black border-2 border-white rounded-lg`}
                     icon={faXmark} />
             </div>

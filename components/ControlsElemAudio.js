@@ -46,6 +46,7 @@ export default function ControlsElemAudio({ elemState, setElemState }) {
                         playing={elemState.enabled && !controlState.paused}
                         volume={(volume / 100).toFixed(2)}
                         url={elemState.mediaSrc}
+                        loop={true}
                     />
                 </div>
             </div>

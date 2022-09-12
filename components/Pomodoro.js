@@ -35,8 +35,8 @@ export default function Pomodoro() {
     const [isSettingsOpen, setSettingsOpen] = useState(false)
     const firstRender = useFirstRender();
 
-    const [focusAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_break.mp3'));
-    const [breakAlert] = useState(typeof Audio !== "undefined" && new Audio('/mp3/timer_alert_work.mp3'));
+    const breakAlertSoundSrc = '/mp3/timer_alert_break.mp3';
+    const focusAlertSoundSrc = '/mp3/timer_alert_work.mp3';
 
     const settingsVariants = {
         open: { x: 30, y: 10, rotate: 0 },
@@ -47,22 +47,36 @@ export default function Pomodoro() {
         if (!firstRender) {
             if (isBreakTime) {
                 setTime(controlState.timer.breakTime)
-                focusAlert.play()
+                if (controlState.timer.playSound)
+                {
+                    new Audio(breakAlertSoundSrc).play()
+                }
             }
             else {
                 setTime(controlState.timer.focusTime)
-                breakAlert.play()
+                if (controlState.timer.playSound)
+                {
+                    new Audio(focusAlertSoundSrc).play()
+                }
             }
         }
     }, [isBreakTime])
 
     useEffect(() =>
         setTimeStr(getTimeStr(time))
-        , [time])
+    , [time])
 
     useEffect(() => {
         setTimerPaused(controlState.timer.enabled);
     }, [controlState.timer.enabled])
+
+    useEffect(() => {
+        setTime(old => isBreakTime ? old : controlState.timer.focusTime);
+    }, [controlState.timer.focusTime])
+
+    useEffect(() => {
+        setTime(old => isBreakTime ? controlState.timer.breakTime : old);
+    }, [controlState.timer.breakTime])
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -106,7 +120,7 @@ export default function Pomodoro() {
                                     <img src='img/settings.svg' />
                                 </motion.div>
 
-                                <div className={`${isBreakTime ? 'text-green-500' : 'text-red-500'}`}>
+                                <div className={`${isBreakTime ? 'text-green-500' : 'text-red-500'} my-1 text-4xl`}>
                                     {timeStr}
                                 </div>
                             </div>
